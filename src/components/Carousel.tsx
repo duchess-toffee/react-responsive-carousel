@@ -48,6 +48,7 @@ export interface Props {
     ) => React.ReactNode;
     renderItem: (item: React.ReactNode, options?: { isSelected: boolean }) => React.ReactNode;
     renderThumbs: (children: React.ReactChild[]) => React.ReactChild[];
+    reversed: boolean;
     selectedItem: number;
     showArrows: boolean;
     showStatus: boolean;
@@ -157,6 +158,7 @@ export default class Carousel extends React.Component<Props, State> {
 
             return images;
         },
+        reversed: false,
         statusFormatter: defaultStatusFormatter,
         selectedItem: 0,
         showArrows: true,
@@ -328,7 +330,7 @@ export default class Carousel extends React.Component<Props, State> {
 
         if (this.timer) clearTimeout(this.timer);
         this.timer = setTimeout(() => {
-            this.increment();
+            this.props.reversed ? this.decrement() : this.increment();
         }, this.props.interval);
     };
 
